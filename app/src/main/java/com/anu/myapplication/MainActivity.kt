@@ -3,16 +3,16 @@ package com.anu.myapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    PhotographerCard()
+                    ExploreLayouts()
                 }
             }
         }
@@ -48,12 +48,17 @@ fun PhotographerCard(modifier: Modifier = Modifier) {
             .background(color = MaterialTheme.colors.surface)
             .padding(8.dp)) {
         Surface(
-            shape = CircleShape, modifier = Modifier.size(50.dp), color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f)) {
+            shape = CircleShape,
+            modifier = Modifier.size(50.dp),
+            color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f)
+        ) {
 //       Image(painter = , contentDescription = )
         }
-        Column(modifier = Modifier
-            .padding(start = 8.dp)
-            .align(CenterVertically)) {
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .align(CenterVertically)
+        ) {
             Text(text = "Anusree Sajeevan", fontWeight = FontWeight.Bold)
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(text = "3 mins ago", style = MaterialTheme.typography.body2)
@@ -72,14 +77,53 @@ fun PhotographerCardPreview() {
 
 @Composable
 fun CustomiseButtons() {
-    Button(onClick = {  }) {
+    Button(onClick = { }) {
         Text(text = "Like")
-        Icon(modifier = Modifier.padding(start = 4.dp), painter = painterResource(id = R.drawable.ic_baseline_favorite_24), contentDescription = null)
+        Icon(
+            modifier = Modifier.padding(start = 4.dp),
+            painter = painterResource(id = R.drawable.ic_baseline_favorite_24),
+            contentDescription = null
+        )
     }
 }
 
 @Composable
 @Preview
 fun PreviewCustomiseButtons() {
-CustomiseButtons()
+    CustomiseButtons()
+}
+
+
+@Composable
+fun ExploreLayouts() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "This is topbar") },
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(Icons.Filled.Favorite, contentDescription = null)
+                    }
+                }
+            )
+        }
+    ) { innerPAdding ->
+        BodyContent(Modifier.padding(innerPAdding))
+    }
+}
+
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text(text = "Hi There!")
+        Text(text = "Thanks for material design composable!!")
+    }
+}
+
+@Preview
+@Composable
+fun PreviewExploreLayouts() {
+    MyApplicationTheme {
+        ExploreLayouts()
+    }
 }
