@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,12 +41,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PhotographerCard(modifier: Modifier = Modifier) {
-    Row(modifier.clip(RoundedCornerShape(4.dp)).clickable {  }.background(color = MaterialTheme.colors.surface).padding(8.dp)) {
+    Row(
+        modifier
+            .clip(RoundedCornerShape(4.dp))
+            .clickable { }
+            .background(color = MaterialTheme.colors.surface)
+            .padding(8.dp)) {
         Surface(
             shape = CircleShape, modifier = Modifier.size(50.dp), color = MaterialTheme.colors.onSurface.copy(alpha = 0.1f)) {
 //       Image(painter = , contentDescription = )
         }
-        Column(modifier = Modifier.padding(start = 8.dp).align(CenterVertically)) {
+        Column(modifier = Modifier
+            .padding(start = 8.dp)
+            .align(CenterVertically)) {
             Text(text = "Anusree Sajeevan", fontWeight = FontWeight.Bold)
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(text = "3 mins ago", style = MaterialTheme.typography.body2)
@@ -60,4 +68,18 @@ fun PhotographerCardPreview() {
     MyApplicationTheme {
         PhotographerCard()
     }
+}
+
+@Composable
+fun CustomiseButtons() {
+    Button(onClick = {  }) {
+        Text(text = "Like")
+        Icon(modifier = Modifier.padding(start = 4.dp), painter = painterResource(id = R.drawable.ic_baseline_favorite_24), contentDescription = null)
+    }
+}
+
+@Composable
+@Preview
+fun PreviewCustomiseButtons() {
+CustomiseButtons()
 }
