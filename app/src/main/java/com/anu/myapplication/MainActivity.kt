@@ -6,8 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fastfood
@@ -33,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ExploreLayouts()
+                    LazySimpleList()
                 }
             }
         }
@@ -126,5 +130,24 @@ fun BodyContent(modifier: Modifier = Modifier) {
 fun PreviewExploreLayouts() {
     MyApplicationTheme {
         ExploreLayouts()
+    }
+}
+
+@Composable
+fun SimpleList() {
+    val scrollState = rememberScrollState()
+    Column(Modifier.verticalScroll(scrollState)) {
+        repeat(100000) {
+            Text(text = "Item$it")
+        }
+    }
+}
+@Composable
+fun LazySimpleList() {
+    val scrollState = rememberLazyListState()
+    LazyColumn(state = scrollState) {
+        items(100000) {
+            Text(text = "Item$it")
+        }
     }
 }
