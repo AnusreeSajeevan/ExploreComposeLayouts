@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.anu.myapplication.ui.theme.MyApplicationTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,9 +144,25 @@ fun SimpleList() {
 @Composable
 fun LazySimpleList() {
     val scrollState = rememberLazyListState()
-    LazyColumn(state = scrollState) {
-        items(100000) {
-            ImageListItem(pos = it)
+    val coroutineScope = rememberCoroutineScope()
+    val listSize = 100000
+
+    Column {
+        Row {
+            Button(onClick = { coroutineScope.launch { scrollState.animateScrollToItem(0) } }) {
+                Text(text = "Scroll to top")
+            }
+
+            Button(onClick = { coroutineScope.launch { scrollState.animateScrollToItem(listSize - 1) } }) {
+                Text(text = "Scroll to bottom")
+            }
+        }
+
+
+        LazyColumn(state = scrollState) {
+            items(listSize) {
+                ImageListItem(pos = it)
+            }
         }
     }
 }
